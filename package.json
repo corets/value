@@ -1,12 +1,16 @@
 {
   "name": "@corets/value",
-  "version": "0.0.1-0",
+  "version": "0.0.1-1",
   "author": "Maxim Kott",
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
-  "keywords": ["corets", "value", "observable"],
+  "keywords": [
+    "corets",
+    "value",
+    "observable"
+  ],
   "files": [
     "/dist"
   ],
@@ -24,10 +28,10 @@
     "devrelease": "np prerelease --no-release-draft --tag dev"
   },
   "devDependencies": {
-    "microbundle": "^0.13.0",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.1",
     "jest": "^25.1.0",
+    "microbundle": "^0.13.0",
     "prettier": "2.2.1",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
