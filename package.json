@@ -1,5 +1,6 @@
 {
   "name": "@corets/value",
+  "description": "Observable value that can be used inside and outside of React",
   "version": "0.0.1-4",
   "author": "Maxim Kott",
   "license": "MIT",
