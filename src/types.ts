@@ -1,8 +1,4 @@
 export interface ObservableValue<TValue = any> {
-  value: TValue
-  initialValue: TValue
-  config: ValueConfig<TValue>
-
   get(): TValue
   set(newValue: TValue): void
   reset(initialValue?: TValue): void
