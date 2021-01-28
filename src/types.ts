@@ -1,7 +1,6 @@
 export interface ObservableValue<TValue = any> {
   get(): TValue
   set(newValue: TValue): void
-  reset(initialValue?: TValue): void
   listen(
     callback: ValueListener<TValue>,
     options?: ValueListenOptions<TValue>

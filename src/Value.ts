@@ -32,14 +32,6 @@ export class Value<TValue> implements ObservableValue<TValue> {
     this.notify()
   }
 
-  reset(initialValue?: TValue) {
-    if (initialValue !== undefined) {
-      this.initialValue = initialValue
-    }
-
-    this.set(this.initialValue)
-  }
-
   listen(
     callback: ValueListener<TValue>,
     options?: ValueListenOptions<TValue>
