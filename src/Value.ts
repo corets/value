@@ -14,7 +14,7 @@ export class Value<TValue> implements ObservableValue<TValue> {
   config: ValueConfig<TValue>
   listeners: ValueListenerWithDiffer<TValue>[]
 
-  constructor(initialValue: TValue, config?: ValueConfig<TValue>) {
+  constructor(initialValue: TValue, config?: Partial<ValueConfig<TValue>>) {
     this.initialValue = initialValue
     this.value = this.initialValue
     this.config = {

@@ -110,7 +110,27 @@ describe("Value", () => {
     expect(callback).toHaveBeenCalledWith(2)
   })
 
-  it("takes a custom differ", () => {
+  it("creates value with a custom differ trough constructor", () => {
+    const value = new Value(1, { differ: () => true })
+    const callback = jest.fn()
+
+    value.listen(callback, { immediate: true })
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(1)
+
+    value.set(1)
+
+    expect(callback).toHaveBeenCalledTimes(2)
+    expect(callback).toHaveBeenCalledWith(1)
+
+    value.set(2)
+
+    expect(callback).toHaveBeenCalledTimes(3)
+    expect(callback).toHaveBeenCalledWith(2)
+  })
+
+  it("takes a custom differ trough listen", () => {
     const value = createValue(1)
     const callback = jest.fn()
 
