@@ -9,14 +9,12 @@ import { ValueListenerWithDiffer } from "./ValueListenerWithDiffer"
 import { defaultDiffer } from "./defaultDiffer"
 
 export class Value<TValue> implements ObservableValue<TValue> {
-  initialValue: TValue
   value: TValue
   config: ValueConfig<TValue>
   listeners: ValueListenerWithDiffer<TValue>[]
 
-  constructor(initialValue: TValue, config?: Partial<ValueConfig<TValue>>) {
-    this.initialValue = initialValue
-    this.value = this.initialValue
+  constructor(value: TValue, config?: Partial<ValueConfig<TValue>>) {
+    this.value = value
     this.config = {
       differ: config?.differ ?? defaultDiffer,
     }
