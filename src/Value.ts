@@ -1,20 +1,25 @@
-import { ObservableValue, ValueCallback, ValueCallbackUnsubscribe, ValueDiffer } from "./types"
-import { ValueListener } from "./ValueListener"
+import {
+  ObservableValue,
+  ValueListener,
+  ValueListenerUnsubscribe,
+  ValueListenOptions,
+  ValueConfig,
+} from "./types"
+import { ValueListenerWithDiffer } from "./ValueListenerWithDiffer"
 import { defaultDiffer } from "./defaultDiffer"
 
 export class Value<TValue> implements ObservableValue<TValue> {
   initialValue: TValue
   value: TValue
-  differ: ValueDiffer<any>
-  listeners: ValueListener<TValue>[]
+  config: ValueConfig<TValue>
+  listeners: ValueListenerWithDiffer<TValue>[]
 
-  constructor(
-    initialValue: TValue,
-    differ: ValueDiffer<TValue> = defaultDiffer,
-  ) {
+  constructor(initialValue: TValue, config?: ValueConfig<TValue>) {
     this.initialValue = initialValue
     this.value = this.initialValue
-    this.differ = differ
+    this.config = {
+      differ: config?.differ ?? defaultDiffer,
+    }
     this.listeners = []
   }
 
@@ -23,12 +28,8 @@ export class Value<TValue> implements ObservableValue<TValue> {
   }
 
   set(newValue: TValue) {
-    const isDifferent = this.differ(this.value, newValue)
-
-    if (isDifferent) {
-      this.value = newValue
-      this.notify()
-    }
+    this.value = newValue
+    this.notify()
   }
 
   reset(initialValue?: TValue) {
@@ -39,21 +40,25 @@ export class Value<TValue> implements ObservableValue<TValue> {
     this.set(this.initialValue)
   }
 
-  listen(callback: ValueCallback<TValue>, notifyImmediately = true): ValueCallbackUnsubscribe {
-    const listener = new ValueListener<TValue>(callback, this.differ)
+  listen(
+    callback: ValueListener<TValue>,
+    options?: ValueListenOptions<TValue>
+  ): ValueListenerUnsubscribe {
+    const differ = options?.differ ?? this.config.differ
+    const listener = new ValueListenerWithDiffer<TValue>(callback, differ)
 
     this.listeners.push(listener)
 
-    if (notifyImmediately) {
+    if (options?.immediate) {
       listener.notify(this.value)
     }
 
     return () => {
-      this.listeners = this.listeners.filter(item => item !== listener)
+      this.listeners = this.listeners.filter((item) => item !== listener)
     }
   }
 
   protected notify() {
-    this.listeners.forEach(listener => listener.notify(this.value))
+    this.listeners.forEach((listener) => listener.notify(this.value))
   }
 }

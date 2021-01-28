@@ -1,4 +1,5 @@
 import { CreateValue } from "./types"
 import { Value } from "./Value"
 
-export const createValue: CreateValue = (initialValue?) => new Value(initialValue)
+export const createValue: CreateValue = (initialValue?, options?) =>
+  new Value(initialValue, options)
