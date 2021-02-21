@@ -118,4 +118,20 @@ describe("Value", () => {
     expect(callback).toHaveBeenCalledTimes(3)
     expect(callback).toHaveBeenCalledWith(2)
   })
+
+  it("is usable", () => {
+    const counter = createValue(1)
+    const [value, setValue] = counter.use()
+
+    expect(counter.get()).toBe(1)
+    expect(counter.get()).toBe(value)
+
+    setValue(2)
+
+    expect(counter.get()).toBe(2)
+
+    setValue((oldValue) => oldValue + 1)
+
+    expect(counter.get()).toBe(3)
+  })
 })

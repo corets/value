@@ -4,9 +4,11 @@ import {
   ValueListenerUnsubscribe,
   ValueListenOptions,
   ValueConfig,
+  ValueSetter,
 } from "./types"
 import { ValueListenerWithDiffer } from "./ValueListenerWithDiffer"
 import { defaultDiffer } from "./defaultDiffer"
+import { createValueSetter } from "./createValueSetter"
 
 export class Value<TValue> implements ObservableValue<TValue> {
   value: TValue
@@ -28,6 +30,10 @@ export class Value<TValue> implements ObservableValue<TValue> {
   set(newValue: TValue) {
     this.value = newValue
     this.notify()
+  }
+
+  use(): [TValue, ValueSetter<TValue>] {
+    return [this.get(), createValueSetter(this)]
   }
 
   listen(

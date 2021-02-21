@@ -1,6 +1,7 @@
 export interface ObservableValue<TValue = any> {
   get(): TValue
   set(newValue: TValue): void
+  use(): [TValue, ValueSetter<TValue>]
   listen(
     callback: ValueListener<TValue>,
     options?: ValueListenOptions<TValue>
@@ -26,3 +27,5 @@ export type CreateValue = <TValue>(
   initialValue: TValue,
   options?: ValueConfig<TValue>
 ) => ObservableValue<TValue>
+export type CreateValueSetter = <TValue>(value: ObservableValue<TValue>) => ValueSetter<TValue>
+export type ValueSetter<TValue = any> = (newValue: TValue | ((oldValue: TValue) => TValue)) => void
