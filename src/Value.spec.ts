@@ -134,4 +134,31 @@ describe("Value", () => {
 
     expect(counter.get()).toBe(3)
   })
+
+  it("diffs undefined", () => {
+    const value = createValue(1)
+    const listener = jest.fn()
+
+    value.listen(listener)
+
+    value.set(undefined as any)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(listener).toHaveBeenCalledWith(undefined)
+  })
+
+  it("diffs undefined with immediate", () => {
+    const value = createValue(1)
+    const listener = jest.fn()
+
+    value.listen(listener, { immediate: true })
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(listener).toHaveBeenCalledWith(1)
+
+    value.set(undefined as any)
+
+    expect(listener).toHaveBeenCalledTimes(2)
+    expect(listener).toHaveBeenCalledWith(undefined)
+  })
 })

@@ -41,12 +41,16 @@ export class Value<TValue> implements ObservableValue<TValue> {
     options?: ValueListenOptions<TValue>
   ): ValueListenerUnsubscribe {
     const differ = options?.differ ?? this.config.differ
-    const listener = new ValueListenerWithDiffer<TValue>(callback, differ)
+    const listener = new ValueListenerWithDiffer<TValue>(
+      callback,
+      this.value,
+      differ
+    )
 
     this.listeners.push(listener)
 
     if (options?.immediate) {
-      listener.notify(this.value)
+      listener.notify(this.value, false)
     }
 
     return () => {
