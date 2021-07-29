@@ -20,7 +20,7 @@
     "/dist"
   ],
   "repository": "github:corets/value",
-  "homepage": "https://corets.github.io/form",
+  "homepage": "https://docs.corets.io/observables/value",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
